@@ -2,6 +2,7 @@ package com.palmithor.sparkplayground.dao.impl;
 
 import com.google.inject.Inject;
 import com.palmithor.sparkplayground.dao.TodoDao;
+import com.palmithor.sparkplayground.dao.TodoFilter;
 import com.palmithor.sparkplayground.db.Column;
 import com.palmithor.sparkplayground.db.SelectBuilder;
 import com.palmithor.sparkplayground.db.Sql2oParam;
@@ -30,9 +31,17 @@ public class TodoDaoImpl extends BaseDao<TodoDTO> implements TodoDao {
     }
 
     @Override
-    public List<TodoDTO> getAll() {
-        final String sql = new SelectBuilder(Table.TODO).orderBy("id desc").toString();
-        return find(sql);
+    public List<TodoDTO> getAll(final TodoFilter filter) {
+        SelectBuilder selectBuilder = new SelectBuilder(Table.TODO).orderBy("id desc");
+        switch (filter) {
+            case ACTIVE:
+                selectBuilder.where("done = false");
+                break;
+            case DONE:
+                selectBuilder.where("done = true");
+                break;
+        }
+        return find(selectBuilder.toString());
     }
 
     @Override

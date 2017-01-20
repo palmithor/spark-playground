@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface RequestHandler<V> {
 
-    BaseResponse process(final V payload, Map<String, String> urlParams);
+    BaseResponse process(final V value, final Map<String, String[]> queryParams);
 
 }

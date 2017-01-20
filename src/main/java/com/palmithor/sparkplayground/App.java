@@ -27,7 +27,7 @@ public class App {
         new JCommander(options, args);
         Injector injector = Guice.createInjector(new AppModule(options.databaseUrl, options.databaseUsername, options.databasePassword));
 
-        injector.getInstance(MigrationUtils.class).startFresh(); // TODO set some kind of control production vs test
+        injector.getInstance(MigrationUtils.class).migrate(); // TODO set some kind of control production vs test
 
         printOptions(options);
         initThreadPool();

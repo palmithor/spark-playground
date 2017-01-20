@@ -38,27 +38,27 @@ public abstract class ApiRoute<RequestType, ResponseType extends BaseResponse> i
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(final Request request, final Response response) throws Exception {
 
         RequestType value = null;
         if (hasPayload()) {
             value = gson.fromJson(request.body(), requestClass);
         }
-        Map<String, String> urlParams = request.params();
+        final Map<String, String[]> queryParams = request.queryMap().toMap();
 
-        return process(value, urlParams);
+        return process(value, queryParams);
     }
 
-    protected abstract ResponseType processImpl(final RequestType payload, final Map<String, String> urlParams);
+    protected abstract ResponseType processImpl(final RequestType payload, final Map<String, String[]> queryParams  );
 
-    public ResponseType process(final RequestType value, final Map<String, String> urlParams) {
+    public ResponseType process(final RequestType value, Map<String, String[]> queryParams ) {
         if (value != null) {
             Optional<ErrorResponse> validationResult = validate(value);
             if (validationResult.isPresent()) {
                 return (ResponseType) validationResult.get();
             }
         }
-        return processImpl(value, urlParams);
+        return processImpl(value, queryParams);
     }
 
     private boolean hasPayload() {

@@ -13,14 +13,17 @@ import com.palmithor.sparkplayground.http.request.TodoRequest;
 import com.palmithor.sparkplayground.http.response.ObjectResponse;
 import org.junit.Before;
 import org.junit.Test;
+import spark.QueryParamsMap;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static com.palmithor.sparkplayground.http.HttpAssertionUtils.assertGeneratedValuesExist;
 import static com.palmithor.sparkplayground.http.HttpAssertionUtils.assertMetaSuccess;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Integration tests for POST /api/v1/todos
