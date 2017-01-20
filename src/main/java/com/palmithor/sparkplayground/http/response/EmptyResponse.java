@@ -9,7 +9,7 @@ package com.palmithor.sparkplayground.http.response;
 public class EmptyResponse extends BaseResponse {
 
     public EmptyResponse() {
-        super();
+        super(Meta.success());
     }
 
     public EmptyResponse(final Meta meta) {

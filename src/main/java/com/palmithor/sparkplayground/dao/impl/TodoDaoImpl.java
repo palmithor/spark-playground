@@ -45,8 +45,9 @@ public class TodoDaoImpl extends BaseDao<TodoDTO> implements TodoDao {
     }
 
     @Override
-    public List<TodoDTO> get(final Integer nextMaxId) {
-        return null;
+    public boolean delete(final Long id) {
+        final String sql = "delete from todos where id = :id";
+        return delete(sql, new Sql2oParam(Column.ID, id));
     }
 
     @Override
@@ -59,9 +60,9 @@ public class TodoDaoImpl extends BaseDao<TodoDTO> implements TodoDao {
     @Override
     public TodoDTO update(final TodoDTO dto) {
         final String sql = "update todos " +
-                "set title = :title, due = :due, done = :done, created = :created, updated = :updated " +
+                "set title = :title, due = :due, done = :done, updated = :updated " +
                 "where id = :id";
-        return executeUpdate(sql, dto);
+        return update(sql, dto);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class TodoPostRouteIT {
     @Test
     public void testOK() throws Exception {
         final String title = "message";
-        ObjectResponse<TodoDTO> response = route.process(new TodoRequest(title), new HashMap<>());
+        ObjectResponse<TodoDTO> response = route.process(new TodoRequest(title), new HashMap<>(), new HashMap<>());
         assertMetaSuccess(response);
         assertGeneratedValuesExist(response.getData());
         assertThat(response.getData().getTitle(), is(title));

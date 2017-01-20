@@ -81,6 +81,7 @@ public class TodoDaoImplTest {
     public void testUpdate() {
         final TodoDTO dto = TodoDTO.create().withTitle("title").build();
         TodoDTO created = todoDao.create(dto);
+        assertThat(created.isDone(), is(false));
         created.setDone(true);
         TodoDTO updated = todoDao.update(created);
         assertThat(updated.isDone(), is(true));
@@ -93,4 +94,15 @@ public class TodoDaoImplTest {
         created.setTitle(null);
         todoDao.update(created);
     }
+
+    @Test
+    public void testDeleteOK() {
+        final TodoDTO dto = TodoDTO.create().withTitle("title").build();
+        TodoDTO created = todoDao.create(dto);
+        todoDao.delete(created.getId());
+        TodoDTO foundDto = todoDao.getById(created.getId());
+        assertThat(foundDto, is(nullValue()));
+    }
+
+
 }

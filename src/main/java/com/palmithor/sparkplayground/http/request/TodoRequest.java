@@ -2,6 +2,7 @@ package com.palmithor.sparkplayground.http.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * A POJO for adding / updating todos
@@ -19,7 +20,6 @@ public class TodoRequest {
     // TODO add pattern validation
     private final String due;
     private final Boolean done;
-
 
     public TodoRequest() {
         this.title = null;

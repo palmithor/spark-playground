@@ -45,7 +45,7 @@ public class TodoGetAllRouteTest {
         final TodoDao todoDaoMock = mock(TodoDao.class);
         when(todoDaoMock.getAll(any())).thenReturn(new ArrayList<>());
         final TodoGetAllRoute route = new TodoGetAllRoute(gson, todoDaoMock);
-        ListResponse<TodoDTO> response = route.processImpl(new EmptyRequest(), new HashMap<>());
+        ListResponse<TodoDTO> response = route.processImpl(new EmptyRequest(),new HashMap<>(),  new HashMap<>());
         assertMetaSuccess(response);
         assertThat(response.getData(), hasSize(0));
     }
@@ -57,7 +57,7 @@ public class TodoGetAllRouteTest {
         responseList.add(TodoDTO.create().withTitle("message").build());
         when(todoDaoMock.getAll(any())).thenReturn(responseList);
         final TodoGetAllRoute route = new TodoGetAllRoute(gson, todoDaoMock);
-        ListResponse<TodoDTO> response = route  .processImpl(new EmptyRequest(), new HashMap<>());
+        ListResponse<TodoDTO> response = route  .processImpl(new EmptyRequest(),new HashMap<>(),  new HashMap<>());
         assertMetaSuccess(response);
         assertThat(response.getData(), hasSize(1));
     }

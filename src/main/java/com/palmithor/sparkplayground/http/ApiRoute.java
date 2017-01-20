@@ -46,19 +46,19 @@ public abstract class ApiRoute<RequestType, ResponseType extends BaseResponse> i
         }
         final Map<String, String[]> queryParams = request.queryMap().toMap();
 
-        return process(value, queryParams);
+        return process(value, request.params(), queryParams);
     }
 
-    protected abstract ResponseType processImpl(final RequestType payload, final Map<String, String[]> queryParams  );
+    protected abstract ResponseType processImpl(final RequestType payload, final Map<String, String> pathParams, final Map<String, String[]> queryParams) throws Exception;
 
-    public ResponseType process(final RequestType value, Map<String, String[]> queryParams ) {
+    public ResponseType process(final RequestType value, final Map<String, String> pathParams, Map<String, String[]> queryParams ) throws Exception {
         if (value != null) {
             Optional<ErrorResponse> validationResult = validate(value);
             if (validationResult.isPresent()) {
                 return (ResponseType) validationResult.get();
             }
         }
-        return processImpl(value, queryParams);
+        return processImpl(value, pathParams, queryParams);
     }
 
     private boolean hasPayload() {

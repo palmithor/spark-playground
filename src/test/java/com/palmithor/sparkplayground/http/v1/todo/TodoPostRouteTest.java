@@ -44,7 +44,7 @@ public class TodoPostRouteTest {
     public void testBadRequest() throws Exception {
         final TodoDao todoDaoMock = mock(TodoDao.class);
         final TodoPostRoute route = new TodoPostRoute(gson, todoDaoMock);
-        BaseResponse response = route.process(new TodoRequest(), new HashMap<>());
+        BaseResponse response = route.process(new TodoRequest(),new HashMap<>(),  new HashMap<>());
         assertThat(response.getMeta().getCode(), is(400));
     }
 
@@ -62,7 +62,7 @@ public class TodoPostRouteTest {
 
         when(todoDaoMock.create(any())).thenReturn(createdDto);
         final TodoPostRoute route = new TodoPostRoute(gson, todoDaoMock);
-        ObjectResponse<TodoDTO> response = route.processImpl(todoRequest, new HashMap<>());
+        ObjectResponse<TodoDTO> response = route.processImpl(todoRequest,new HashMap<>(),  new HashMap<>());
         assertMetaSuccess(response);
         assertThat(response.getData().getDue(), is(nullValue()));
         assertThat(response.getData().isDone(), is(false));

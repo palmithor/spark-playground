@@ -81,8 +81,8 @@ public class TodoDTO extends BaseDTO {
             return this;
         }
 
-        public Builder withDone(boolean done) {
-            this.done = done;
+        public Builder withDone(final Boolean done) {
+            this.done = done != null ? done : false;
             return this;
         }
 
