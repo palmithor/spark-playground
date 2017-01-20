@@ -23,7 +23,8 @@ import static spark.Spark.put;
 public class TodoEndpointsRegistry {
 
 
-    private static final String BASE_PATH = "/todos";
+    private static final String BASE_PATH = "todos";
+
     private final MetricRegistry metricRegistry;
     private final TodoGetAllRoute todosRouteGetRoute;
     private final TodoPostRoute todoPostRoute;
