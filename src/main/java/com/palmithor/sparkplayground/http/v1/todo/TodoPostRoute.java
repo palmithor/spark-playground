@@ -28,7 +28,7 @@ public class TodoPostRoute extends ApiRoute<TodoRequest, ObjectResponse<TodoDTO>
     }
 
     @Override
-    protected ObjectResponse<TodoDTO> processImpl(final TodoRequest payload, final Map<String, String> urlParams) {
+    protected ObjectResponse<TodoDTO> processImpl(final TodoRequest payload, final Map<String, String[]> queryParams ) {
         final TodoDTO dto = new TodoDTO();
         dto.setDone(payload.getDone());
         dto.setTitle(payload.getTitle());

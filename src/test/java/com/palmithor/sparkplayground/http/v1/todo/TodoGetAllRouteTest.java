@@ -3,20 +3,25 @@ package com.palmithor.sparkplayground.http.v1.todo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.palmithor.sparkplayground.dao.TodoDao;
+import com.palmithor.sparkplayground.dao.TodoFilter;
 import com.palmithor.sparkplayground.dto.TodoDTO;
 import com.palmithor.sparkplayground.http.request.EmptyRequest;
 import com.palmithor.sparkplayground.http.response.ListResponse;
 import com.palmithor.sparkplayground.util.Rfc339DateJsonAdapter;
+import com.sun.javafx.tools.packager.PackagerLib;
 import org.junit.Before;
 import org.junit.Test;
+import spark.QueryParamsMap;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static com.palmithor.sparkplayground.http.HttpAssertionUtils.assertMetaSuccess;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +43,7 @@ public class TodoGetAllRouteTest {
     @Test
     public void testOKEmpty() throws Exception {
         final TodoDao todoDaoMock = mock(TodoDao.class);
-        when(todoDaoMock.getAll()).thenReturn(new ArrayList<>());
+        when(todoDaoMock.getAll(any())).thenReturn(new ArrayList<>());
         final TodoGetAllRoute route = new TodoGetAllRoute(gson, todoDaoMock);
         ListResponse<TodoDTO> response = route.processImpl(new EmptyRequest(), new HashMap<>());
         assertMetaSuccess(response);
@@ -50,9 +55,9 @@ public class TodoGetAllRouteTest {
         final TodoDao todoDaoMock = mock(TodoDao.class);
         ArrayList<TodoDTO> responseList = new ArrayList<>();
         responseList.add(TodoDTO.create().withTitle("message").build());
-        when(todoDaoMock.getAll()).thenReturn(responseList);
+        when(todoDaoMock.getAll(any())).thenReturn(responseList);
         final TodoGetAllRoute route = new TodoGetAllRoute(gson, todoDaoMock);
-        ListResponse<TodoDTO> response = route.processImpl(new EmptyRequest(), new HashMap<>());
+        ListResponse<TodoDTO> response = route  .processImpl(new EmptyRequest(), new HashMap<>());
         assertMetaSuccess(response);
         assertThat(response.getData(), hasSize(1));
     }

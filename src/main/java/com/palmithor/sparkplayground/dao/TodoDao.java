@@ -12,12 +12,11 @@ public interface TodoDao {
 
     TodoDTO getById(final Long id);
 
-    List<TodoDTO> getAll();
-
     List<TodoDTO> get(final Integer nextMaxId);
 
     TodoDTO create(final TodoDTO dto);
 
     TodoDTO update(final TodoDTO dto);
 
+    List<TodoDTO> getAll(final TodoFilter filter);
 }

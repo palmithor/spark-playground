@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.palmithor.sparkplayground.AppModule;
 import com.palmithor.sparkplayground.TestUtils;
+import com.palmithor.sparkplayground.dao.TodoFilter;
 import com.palmithor.sparkplayground.db.MigrationUtils;
 import com.palmithor.sparkplayground.dto.TodoDTO;
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class TodoDaoImplTest {
 
     @Test
     public void testGetAll() {
-        final List<TodoDTO> list = todoDao.getAll();
+        final List<TodoDTO> list = todoDao.getAll(TodoFilter.ALL);
         assertThat(list.size(), is(1));
     }
 
