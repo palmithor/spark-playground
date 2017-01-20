@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.palmithor</groupId>
+    <artifactId>sparkplayground</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+
+        <version.spark>2.5.3</version.spark>
+        <version.spark-metrics>1.19</version.spark-metrics>
+        <version.pac4j>1.2.3</version.pac4j>
+        <version.pac4j-auth>1.9.4</version.pac4j-auth>
+        <version.guice>4.1.0</version.guice>
+        <version.gson>2.6.1</version.gson>
+        <version.slf4j>1.7.21</version.slf4j>
+        <version.jcommander>1.48</version.jcommander>
+        <version.postgres>9.4.1212</version.postgres>
+        <version.flyway>4.0.3</version.flyway>
+        <version.sql2o>1.5.4</version.sql2o>
+        <version.hikari>2.5.1</version.hikari>
+    </properties>
+
+    <dependencies>
+        <!-- Spark -->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>${version.spark}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qmetric</groupId>
+            <artifactId>spark-metrics</artifactId>
+            <version>${version.spark-metrics}</version>
+        </dependency>
+
+        <!-- Authentication and authorization -->
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>spark-pac4j</artifactId>
+            <version>${version.pac4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-oauth</artifactId>
+            <version>${version.pac4j-auth}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-http</artifactId>
+            <version>${version.pac4j-auth}</version>
+        </dependency>
+
+        <!-- Guice dependency injection framework-->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${version.guice}</version>
+        </dependency>
+
+
+        <!-- Hibernate validator for validating request bodies-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.3.4.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
+        <!-- JSON transformation -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${version.gson}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
+        </dependency>
+
+        <!-- Command line argument reader -->
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>${version.jcommander}</version>
+        </dependency>
+
+        <!-- DB -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.postgres}</version>
+        </dependency>
+
+        <!-- Database version controlling -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${version.flyway}</version>
+        </dependency>
+
+        <!-- Maps result sets to objects with high performance -->
+        <dependency>
+            <groupId>org.sql2o</groupId>
+            <artifactId>sql2o</artifactId>
+            <version>${version.sql2o}</version>
+        </dependency>
+
+        <!-- DB Connection pooling - improves performance -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${version.hikari}</version>
+        </dependency>
+
+
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.2.28</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.170</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.despegar</groupId>
+            <artifactId>spark-test</artifactId>
+            <version>1.1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+</project>
