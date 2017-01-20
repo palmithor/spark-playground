@@ -1,7 +1,11 @@
 package com.palmithor.sparkplayground.http;
 
 import com.codahale.metrics.MetricRegistry;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.palmithor.sparkplayground.http.exceptions.ObjectNotFoundException;
+import com.palmithor.sparkplayground.http.response.ApiError;
+import com.palmithor.sparkplayground.http.response.ErrorResponse;
 import com.palmithor.sparkplayground.http.v1.TodoEndpointsRegistry;
 import com.qmetric.spark.metrics.MetricsRoute;
 import org.pac4j.core.config.Config;
@@ -19,11 +23,15 @@ public class SparkServerInitializer implements ServerInitializer {
 
     private final TodoEndpointsRegistry todoEndpointsRegistry;
     private final MetricRegistry metricRegistry;
+    private final Gson gson;
 
     @Inject
-    public SparkServerInitializer(final TodoEndpointsRegistry todoEndpointsRegistry, final MetricRegistry metricRegistry) {
-        this.todoEndpointsRegistry = todoEndpointsRegistry;
+    public SparkServerInitializer(final Gson gson,
+                                  final TodoEndpointsRegistry todoEndpointsRegistry,
+                                  final MetricRegistry metricRegistry) {
+        this.gson = gson;
         this.metricRegistry = metricRegistry;
+        this.todoEndpointsRegistry = todoEndpointsRegistry;
     }
 
 
@@ -37,10 +45,20 @@ public class SparkServerInitializer implements ServerInitializer {
 
         registerAccessControlHeaders();
 
+        setupExceptionHandling();
+
         // Register all endpoints
         todoEndpointsRegistry.registerRoutes();
 
         get("/api/metrics", new MetricsRoute(metricRegistry));
+    }
+
+    private void setupExceptionHandling() {
+        exception(ObjectNotFoundException.class, (exception, request, response) -> {
+            response.status(404);
+            response.body(gson.toJson(ErrorResponse.create().withApiError(ApiError.ITEM_NOT_FOUND).build()));
+        });
+
     }
 
     private void registerAccessControlHeaders() {

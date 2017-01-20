@@ -13,7 +13,8 @@ public enum ApiError {
     UNAUTHORIZED(HttpConstants.UNAUTHORIZED, "Unauthorized"),
     BAD_REQUEST(HttpConstants.BAD_REQUEST, "Bad Request"),
     FORBIDDEN(HttpConstants.FORBIDDEN, "Forbidden"),
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error");
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+    ITEM_NOT_FOUND(404, "Item not found");
 
     private Integer code;
     private String message;

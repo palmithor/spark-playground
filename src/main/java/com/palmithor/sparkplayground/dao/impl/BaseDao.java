@@ -56,15 +56,13 @@ abstract class BaseDao<T extends BaseDTO> {
     }
 
     T insert(final String sql, final T toBind) {
-        final Date now = new Date();
         try (Connection con = sql2o.open()) {
-            Connection result = con.createQuery(sql, true)
-                    .addParameter(Column.CREATED, now)
-                    .addParameter(Column.UPDATED, now)
-                    .bind(toBind)
-                    .executeUpdate();
+            final Date now = new Date();
             toBind.setCreated(now);
             toBind.setUpdated(now);
+            Connection result = con.createQuery(sql, true)
+                    .bind(toBind)
+                    .executeUpdate();
             toBind.setId((Long) result.getKey());
             return toBind;
         } catch (final Sql2oException e) {
@@ -73,16 +71,26 @@ abstract class BaseDao<T extends BaseDTO> {
         }
     }
 
-    T executeUpdate(final String sql, final T toBind) {
-        final Date now = new Date();
+    boolean delete(final String sql, final Sql2oParam... params) {
         try (Connection con = sql2o.open()) {
+            Query query = con.createQuery(sql);
+            for (final Sql2oParam param : params) {
+                query = query.addParameter(param.getKey(), param.getValue());
+            }
+            Connection connection = query.executeUpdate();
+            return 0 < connection.getResult();
+        } catch (final Sql2oException e) {
+            logger.warn("An error occurred fetching from database", e);
+            throw e;
+        }
+    }
+
+    T update(final String sql, final T toBind) {
+        try (Connection con = sql2o.open()) {
+            toBind.setUpdated(new Date());
             con.createQuery(sql, true)
-                    .addParameter(Column.CREATED, toBind.getCreated())
-                    .addParameter(Column.UPDATED, now)
                     .bind(toBind)
                     .executeUpdate();
-            toBind.setCreated(toBind.getCreated());
-            toBind.setUpdated(now);
             return toBind;
         } catch (final Sql2oException e) {
             logger.trace("An error occurred creating", e);

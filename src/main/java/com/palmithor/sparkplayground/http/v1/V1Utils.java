@@ -1,5 +1,10 @@
 package com.palmithor.sparkplayground.http.v1;
 
+import spark.utils.StringUtils;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Utilities for building paths for V1
  *
@@ -14,7 +19,7 @@ public class V1Utils {
 
     }
 
-    public static String preparePath(final String routePath) {
-        return PATH_PREFIX + routePath;
+    public static String preparePath(final String... pathItems) {
+        return PATH_PREFIX + "/" + Arrays.stream(pathItems).collect(Collectors.joining("/"));
     }
 }

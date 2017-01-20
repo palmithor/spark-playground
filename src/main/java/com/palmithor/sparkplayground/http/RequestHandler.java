@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface RequestHandler<V> {
 
-    BaseResponse process(final V value, final Map<String, String[]> queryParams);
+    BaseResponse process(final V value, final Map<String, String> pathParams, final Map<String, String[]> queryParams) throws Exception ;
 
 }
