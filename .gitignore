@@ -74,5 +74,6 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-### scripts modules ###
-scripts/node_modules
+### client modules ###
+client/node_modules
+src/main/resources/client
