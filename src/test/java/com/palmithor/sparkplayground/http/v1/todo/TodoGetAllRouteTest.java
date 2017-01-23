@@ -8,7 +8,6 @@ import com.palmithor.sparkplayground.dto.TodoDTO;
 import com.palmithor.sparkplayground.http.request.EmptyRequest;
 import com.palmithor.sparkplayground.http.response.ListResponse;
 import com.palmithor.sparkplayground.util.Rfc339DateJsonAdapter;
-import com.sun.javafx.tools.packager.PackagerLib;
 import org.junit.Before;
 import org.junit.Test;
 import spark.QueryParamsMap;
