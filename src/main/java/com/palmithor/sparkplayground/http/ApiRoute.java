@@ -1,6 +1,7 @@
 package com.palmithor.sparkplayground.http;
 
 import com.google.gson.Gson;
+import com.palmithor.sparkplayground.http.exceptions.BadRequestException;
 import com.palmithor.sparkplayground.http.request.EmptyRequest;
 import com.palmithor.sparkplayground.http.response.ApiError;
 import com.palmithor.sparkplayground.http.response.BaseResponse;
@@ -40,13 +41,13 @@ public abstract class ApiRoute<RequestType, ResponseType extends BaseResponse> i
     @Override
     public Object handle(final Request request, final Response response) throws Exception {
 
-        RequestType value = null;
+        RequestType requestBody = null;
         if (hasPayload()) {
-            value = gson.fromJson(request.body(), requestClass);
+            requestBody = gson.fromJson(request.body(), requestClass);
         }
         final Map<String, String[]> queryParams = request.queryMap().toMap();
 
-        return process(value, request.params(), queryParams);
+        return process(requestBody, request.params(), queryParams);
     }
 
     protected abstract ResponseType processImpl(final RequestType payload, final Map<String, String> pathParams, final Map<String, String[]> queryParams) throws Exception;
@@ -55,7 +56,7 @@ public abstract class ApiRoute<RequestType, ResponseType extends BaseResponse> i
         if (value != null) {
             Optional<ErrorResponse> validationResult = validate(value);
             if (validationResult.isPresent()) {
-                return (ResponseType) validationResult.get();
+                throw new BadRequestException(validationResult.get());
             }
         }
         return processImpl(value, pathParams, queryParams);

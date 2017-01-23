@@ -3,6 +3,7 @@ package com.palmithor.sparkplayground.http;
 import com.codahale.metrics.MetricRegistry;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.palmithor.sparkplayground.http.exceptions.AbstractRouteException;
 import com.palmithor.sparkplayground.http.exceptions.ObjectNotFoundException;
 import com.palmithor.sparkplayground.http.response.ApiError;
 import com.palmithor.sparkplayground.http.response.ErrorResponse;
@@ -54,9 +55,9 @@ public class SparkServerInitializer implements ServerInitializer {
     }
 
     private void setupExceptionHandling() {
-        exception(ObjectNotFoundException.class, (exception, request, response) -> {
+        exception(AbstractRouteException.class, (exception, request, response) -> {
             response.status(404);
-            response.body(gson.toJson(ErrorResponse.create().withApiError(ApiError.ITEM_NOT_FOUND).build()));
+            response.body(gson.toJson(((AbstractRouteException) exception).getErrorResponse()));
         });
 
     }

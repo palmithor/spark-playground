@@ -26,7 +26,7 @@ export class TodoComponent implements OnInit {
     return this.todoService.get(query)
       .then(todos => {
         this.todos = todos;
-        this.activeTasks = this.todos.filter(todo => todo.isDone).length;
+        this.activeTasks = this.todos.filter(todo => !todo.isDone).length;
       });
   }
 
@@ -39,17 +39,45 @@ export class TodoComponent implements OnInit {
   }
 
   updateTodo(todo, newValue) {
-    //todo.title = newValue;
-    //return this.todoService.put(todo).then(() => {
-    //  todo.editing = false;
-    //  return this.getTodos();
-    //});
+    let oldValue = todo.title;
+    todo.title = newValue;
+    return this.todoService.put(todo)
+      .then(() => {
+        todo.editing = false;
+      }).catch(() => {
+        todo.editing = false;
+        todo.title = oldValue;
+      });
+  }
+
+  toggleComplete(todo) {
+    todo.done = !todo.done;
+
+    return this.todoService.put(todo)
+      .then(() => {
+
+      }).catch(() => {
+        todo.done = !todo.done;
+      });
   }
 
   destroyTodo(todo) {
-    //this.todoService.delete(todo.id).then(() => {
-    //  return this.getTodos();
-    //});
+    if (!todo.done) {
+      this.activeTasks--;
+    }
+
+    let indexOfTodo = this.todos.indexOf(todo);
+
+    this.todos.splice(indexOfTodo, 1);
+
+    this.todoService.delete(todo.id)
+      .then()
+      .catch(() => {
+        if (!todo.done) {
+          this.activeTasks++;
+        }
+        this.todos.splice(indexOfTodo, 0, todo);
+      });
   }
 
   clearCompleted() {

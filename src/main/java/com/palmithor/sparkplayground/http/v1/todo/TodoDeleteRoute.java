@@ -9,6 +9,7 @@ import com.palmithor.sparkplayground.http.RouteParams;
 import com.palmithor.sparkplayground.http.exceptions.ObjectNotFoundException;
 import com.palmithor.sparkplayground.http.request.TodoRequest;
 import com.palmithor.sparkplayground.http.response.EmptyResponse;
+import com.palmithor.sparkplayground.http.response.ErrorResponse;
 import com.palmithor.sparkplayground.http.response.Meta;
 import com.palmithor.sparkplayground.http.response.ObjectResponse;
 import com.palmithor.sparkplayground.util.Iso8601Utils;

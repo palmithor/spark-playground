@@ -27,21 +27,23 @@ export class TodoService {
       .catch(this.handleError);
   }
 
-  //put(data) {
-  //  return new Promise(resolve => {
-  //    let index = todos.findIndex(todo => todo.id === data.id);
-  //    todos[index].title = data.title;
-  //    resolve(data);
-  //  });
-  //}
+  put(todo) {
+    return this.http.put(this.baseUrl + '/' + todo.id, {
+      title: todo.title,
+      due: todo.due,
+      done: todo.done
+    })
+      .toPromise()
+      .then(response => response.json().data as Todo)
+      .catch(this.handleError);
+  }
 
-  //delete(id) {
-  //  return new Promise(resolve => {
-  //    let index = todos.findIndex(todo => todo.id === id);
-  //    todos.splice(index, 1);
-  //    resolve(true);
-  //  });
-  //}
+  delete(id) {
+    return this.http.delete(this.baseUrl + '/' + id)
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
 
   //deleteCompleted() {
   //  return new Promise(resolve => {
